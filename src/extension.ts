@@ -11,16 +11,38 @@ export function activate(context: vscode.ExtensionContext) {
 
   const notebookType = "llm-book"
 
-  const notebookControllerLLaMa = vscode.notebooks.createNotebookController(
-    "llm-book-llama",
-    notebookType,
-    "LlAmA",
-    ControllerFromRunner(LLaMaRunner),
-  )
+  let enabled = false
+  const enableLLaMa = () => {
+    if (!enabled) {
+      enabled = true
 
-  notebookControllerLLaMa.supportedLanguages = ["system", "user", "assistant"]
+      const notebookControllerLLaMa = vscode.notebooks.createNotebookController(
+        "llm-book-llama",
+        notebookType,
+        "LlAmA",
+        ControllerFromRunner(LLaMaRunner),
+      )
 
-  context.subscriptions.push(notebookControllerLLaMa)
+      notebookControllerLLaMa.supportedLanguages = [
+        "system",
+        "user",
+        "assistant",
+      ]
+
+      context.subscriptions.push(notebookControllerLLaMa)
+    }
+  }
+
+  const config = vscode.workspace.getConfiguration("llm-book.LLaMa")
+  if (config.get("binary")) {
+    enableLLaMa()
+  }
+
+  vscode.workspace.onDidChangeConfiguration((e) => {
+    if (e.affectsConfiguration("llm-book.LLaMa.binary")) {
+      enableLLaMa()
+    }
+  })
 }
 
 export function deactivate() {

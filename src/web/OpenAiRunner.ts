@@ -2,7 +2,7 @@ import * as vscode from "vscode"
 import { Runner } from "./ControllerFromRunner"
 
 export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
-  (context) => async (messages, clearOutput, appendOutput, token) => {
+  (context) => async (messages, clearOutput, appendOutput, appendTrace) => {
     let apiKey = await context.secrets.get("ai-book.openAI.apiKey")
     if (!apiKey) {
       apiKey = await vscode.commands.executeCommand("llm-book.updateOpenAIKey")
@@ -32,6 +32,13 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
         ...options,
       }),
     })
+
+    if (!response.ok) {
+      throw Error(
+        'Error accessing OpenAI. The "Update OpenAPI Api Key" command may help you.\n' +
+          (await response.text()),
+      )
+    }
 
     const reader = response.body
       ?.pipeThrough(new TextDecoderStream())
