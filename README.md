@@ -10,6 +10,8 @@ As compared to ChatGPT where you only have control over the `user` message, this
 ![example of overriding the assistant's response](e2.png)
 ![example of overriding the assistant's response](e3.png)
 
+Fun fact! The `.llm` format used by notebooks is on-disk represented in the official Open AI "Chat Format" as JSON, meaning the tuned prompt notebook files can be loaded straight from disk and incorporated with the rest of your pipeline.
+
 ## LLaMa?
 
 There is initial support for LLaMa models (anything CLI-powered, really) but it's wonky (the prompt is echoed back in the response, for one). Also, the base LLaMa models aren't well suited for conversational settings, and do not support the `system`, `user`, `assistant` breakdown. If you are interested in furthering this support, PR's are more than welcome. Set `llm-book.LLaMa.binary` to begin.
