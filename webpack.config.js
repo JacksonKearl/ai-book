@@ -32,6 +32,7 @@ const webExtensionConfig = {
     alias: {
       // provides alternate implementation for node module and source files
       child_process: false,
+      "node-fetch": false,
     },
     fallback: {
       // Webpack 5 no longer polyfills Node.js core modules automatically.
@@ -113,12 +114,12 @@ const nodeExtensionConfig = {
     ],
   },
   plugins: [
-    new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1, // disable chunks by default since web extensions must be a single bundle
-    }),
-    new webpack.ProvidePlugin({
-      process: "process/browser", // provide a shim for the global `process` variable
-    }),
+    // new webpack.optimize.LimitChunkCountPlugin({
+    //   maxChunks: 1, // disable chunks by default since web extensions must be a single bundle
+    // }),
+    // new webpack.ProvidePlugin({
+    //   process: "process/browser", // provide a shim for the global `process` variable
+    // }),
   ],
   externals: {
     vscode: "commonjs vscode", // ignored because it doesn't exist

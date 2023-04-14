@@ -1,8 +1,33 @@
 import * as vscode from "vscode"
 import { Runner } from "./ControllerFromRunner"
 
+import * as nodeFetch from "node-fetch"
+
+let getReader = async function* (response: Response) {
+  const reader = response.body?.pipeThrough(new TextDecoderStream()).getReader()
+  if (!reader) throw Error("No reader")
+
+  while (true) {
+    const { value, done } = await reader?.read()
+    if (done) return
+    yield value
+  }
+}
+
+if (typeof globalThis.fetch == "undefined") {
+  globalThis.fetch = nodeFetch.default as any
+
+  getReader = async function* (response: any) {
+    response = response as nodeFetch.Response
+
+    for await (const chunk of response.body) {
+      yield chunk.toString()
+    }
+  }
+}
+
 export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
-  (context) => async (messages, clearOutput, appendOutput, appendTrace) => {
+  (context) => async (messages, clearOutput, appendOutput) => {
     let apiKey = await context.secrets.get("ai-book.openAI.apiKey")
     if (!apiKey) {
       apiKey = await vscode.commands.executeCommand("llm-book.updateOpenAIKey")
@@ -19,7 +44,7 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
 
     const options = config.get<{}>("options") ?? {}
 
-    const response = await fetch(endpoint, {
+    const response = await globalThis.fetch(endpoint, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,19 +65,12 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
       )
     }
 
-    const reader = response.body
-      ?.pipeThrough(new TextDecoderStream())
-      .getReader()
+    const reader = getReader(response)
 
     if (!reader) throw Error("Unable to get reader")
 
     clearOutput()
-
-    let hasMore = true
-    while (hasMore) {
-      const { value, done } = await reader.read()
-      if (done) break
-
+    for await (const value of reader) {
       const lines = value
         .split("\n")
         .filter((x) => x && x.startsWith("data: "))
@@ -60,7 +78,6 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
 
       for (const line of lines) {
         if (line === "[DONE]") {
-          hasMore = false
           break
         }
 
