@@ -138,7 +138,6 @@
     ]
   },
   "description": "LLM Book: Notebook-based prompt engineering interface for LLM's like GPT and LLaMa, akin to ChatGPT but better",
-  "displayName": "llm-book",
   "engines": {
     "vscode": "^1.77.0"
   },
