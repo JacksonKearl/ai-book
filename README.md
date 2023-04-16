@@ -1,4 +1,4 @@
-# ai-book README
+# LLMBook README
 
 Interact with LLM's via VS Code notebooks.
 
