@@ -4,6 +4,7 @@
   "repository": {
     "url": "https://github.com/JacksonKearl/ai-book"
   },
+  "icon": "./media/iconic.png",
   "main": "./dist/extension.js",
   "devDependencies": {
     "@types/vscode": "^1.77.0",
@@ -31,6 +32,10 @@
       {
         "title": "Update OpenAPI Api Key",
         "command": "llm-book.updateOpenAIKey"
+      },
+      {
+        "title": "Configure LLM Parameters",
+        "command": "llm-book.configureParameters"
       }
     ],
     "configuration": [
@@ -67,6 +72,10 @@
       "notebook/toolbar": [
         {
           "command": "llm-book.updateOpenAIKey"
+        },
+        {
+          "command": "llm-book.configureParameters",
+          "group": "navigation"
         }
       ]
     },
@@ -87,19 +96,44 @@
         "id": "user",
         "aliases": [
           "User"
-        ]
+        ],
+        "icon": {
+          "dark": "./media/file-icon.png",
+          "light": "./media/file-icon.png"
+        }
       },
       {
         "id": "system",
         "aliases": [
           "System"
-        ]
+        ],
+        "icon": {
+          "dark": "./media/file-icon.png",
+          "light": "./media/file-icon.png"
+        }
       },
       {
         "id": "assistant",
         "aliases": [
           "Assistant"
-        ]
+        ],
+        "icon": {
+          "dark": "./media/file-icon.png",
+          "light": "./media/file-icon.png"
+        }
+      },
+      {
+        "id": "llm-book",
+        "aliases": [
+          ""
+        ],
+        "extensions": [
+          ".llm"
+        ],
+        "icon": {
+          "dark": "./media/file-icon.png",
+          "light": "./media/file-icon.png"
+        }
       }
     ]
   },

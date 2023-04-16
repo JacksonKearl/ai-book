@@ -34,7 +34,7 @@ export const MessageJSONSerializer: vscode.NotebookSerializer = {
         role: cell.languageId,
       }))
 
-    return new TextEncoder().encode(JSON.stringify(rawCells))
+    return new TextEncoder().encode(JSON.stringify(rawCells, null, 2))
   },
 }
 

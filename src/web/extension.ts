@@ -15,6 +15,14 @@ export function activate(context: vscode.ExtensionContext) {
     MessageJSONSerializerOptions,
   )
 
+  const configureParametersCommand = vscode.commands.registerCommand(
+    "llm-book.configureParameters",
+    async () => {
+      const notebook = vscode.window.activeNotebookEditor
+      console.log(notebook)
+    },
+  )
+
   const updateOpenAiKeyCommand = vscode.commands.registerCommand(
     "llm-book.updateOpenAIKey",
     async () => {
@@ -23,8 +31,7 @@ export function activate(context: vscode.ExtensionContext) {
         password: true,
         title: "Enter OpenAI API Key",
       })
-      if (!apiKey) {
-        vscode.window.showErrorMessage("Cannot proceed without API key")
+      if (apiKey === undefined) {
         return
       }
 
@@ -46,6 +53,7 @@ export function activate(context: vscode.ExtensionContext) {
     notebookSerializer,
     notebookController,
     updateOpenAiKeyCommand,
+    configureParametersCommand,
   )
 }
 
