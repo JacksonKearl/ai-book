@@ -4,6 +4,7 @@ import { spawn } from "child_process"
 
 export const LLaMaRunner: Runner = async (
   messages,
+  notebook,
   clear,
   append,
   trace,

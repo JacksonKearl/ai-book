@@ -31,11 +31,14 @@
     "commands": [
       {
         "title": "Update OpenAPI Api Key",
-        "command": "llm-book.updateOpenAIKey"
+        "command": "llm-book.updateOpenAIKey",
+        "enablement": "notebookType == llm-book"
       },
       {
         "title": "Configure LLM Parameters",
-        "command": "llm-book.configureParameters"
+        "shortTitle": "Configure LLM",
+        "command": "llm-book.configureParameters",
+        "enablement": "notebookType == llm-book"
       }
     ],
     "configuration": [
@@ -44,16 +47,17 @@
         "properties": {
           "llm-book.openAI.model": {
             "type": "string",
+            "markdownDescription": "Model to use. A `model` field specified in `#llm-book.openAI.parameters#` or the notebooks own parameters will override this.",
             "default": "gpt-3.5-turbo"
           },
           "llm-book.openAI.endpoint": {
             "type": "string",
             "default": "https://api.openai.com/v1/chat/completions"
           },
-          "llm-book.openAI.headers": {
+          "llm-book.openAI.parameters": {
             "type": "object",
             "default": {},
-            "description": "Additional data to send to OpenAI as fields in body's JSON. Used for fine configuration of runtime."
+            "markdownDescription": "Additional data to send to `#llm-book.openAI.endpoint#` as fields in body's JSON. Used for fine configuration of runtime. Parameters configured per-notebook override this."
           },
           "llm-book.LLaMa.binary": {
             "type": "string"

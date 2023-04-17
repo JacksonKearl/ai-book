@@ -37,7 +37,7 @@
         "--extensionTestsPath=${workspaceFolder}/dist/web/test/suite/index"
       ],
       "outFiles": ["${workspaceFolder}/dist/web/**/*.js"],
-      "preLaunchTask": "npm: watch-web"
+      "preLaunchTask": "npm: watch-all"
     }
   ]
 }

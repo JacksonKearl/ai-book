@@ -1,8 +1,9 @@
 import * as vscode from "vscode"
 
-type Messages = { content: string; role: string }[]
+export type Message = { content: string; role: string }
 export type Runner = (
-  messages: Messages,
+  messages: Message[],
+  notebook: vscode.NotebookDocument,
   clearOutput: () => Promise<void>,
   appendOutput: (content: string) => Promise<void>,
   appendTrace: (content: string) => Promise<void>,
@@ -87,6 +88,7 @@ export const ControllerFromRunner =
 
       await runner(
         messages,
+        notebook,
         clearOutput,
         appendOutput,
         appendTrace,

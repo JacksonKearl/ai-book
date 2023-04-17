@@ -27,7 +27,7 @@ if (typeof globalThis.fetch == "undefined") {
 }
 
 export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
-  (context) => async (messages, clearOutput, appendOutput) => {
+  (context) => async (messages, notebook, clearOutput, appendOutput) => {
     let apiKey = await context.secrets.get("ai-book.openAI.apiKey")
     if (!apiKey) {
       apiKey = await vscode.commands.executeCommand("llm-book.updateOpenAIKey")
@@ -42,7 +42,11 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
       config.get<string>("endpoint") ??
       "https://api.openai.com/v1/chat/completions"
 
-    const options = config.get<{}>("options") ?? {}
+    let options = config.get<{}>("parameters") ?? {}
+
+    options = { ...options, ...notebook.metadata.parameters }
+
+    console.log("Using options", options)
 
     const response = await globalThis.fetch(endpoint, {
       method: "POST",
