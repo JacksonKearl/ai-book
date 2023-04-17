@@ -99,15 +99,16 @@ export function activate(context: vscode.ExtensionContext) {
       if (parsed === undefined) {
         return
       }
+      const newParams = { parameters: { ...notebook.metadata.parameters } }
       const edit = new vscode.WorkspaceEdit()
       if (parsed === "") {
-        delete notebook.metadata.parameters[key]
+        delete newParams.parameters[key]
       } else {
-        notebook.metadata.parameters[key] = parsed
+        newParams.parameters[key] = parsed
       }
 
       edit.set(notebook.uri, [
-        vscode.NotebookEdit.updateNotebookMetadata(notebook.metadata),
+        vscode.NotebookEdit.updateNotebookMetadata(newParams),
       ])
 
       await vscode.workspace.applyEdit(edit)
