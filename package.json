@@ -4,7 +4,7 @@
   "repository": {
     "url": "https://github.com/JacksonKearl/ai-book"
   },
-  "icon": "./media/iconic.png",
+  "icon": "/media/iconic.png",
   "main": "./dist/extension.js",
   "devDependencies": {
     "@types/vscode": "^1.77.0",
