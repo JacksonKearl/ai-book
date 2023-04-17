@@ -17,9 +17,10 @@ export function activate(context: vscode.ExtensionContext) {
 
   const configureParametersCommand = vscode.commands.registerCommand(
     "llm-book.configureParameters",
-    async () => {
+    async (arg1, arg2, arg3) => {
       const notebook = vscode.window.activeNotebookEditor
-      console.log(notebook)
+      const notebookEditor = arg1?.notebookEditor.notebookUri
+      console.log("The notebook URI is...", notebookEditor)
     },
   )
 
