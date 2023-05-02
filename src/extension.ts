@@ -61,7 +61,7 @@ export function activate(context: vscode.ExtensionContext) {
         alignment: vscode.NotebookCellStatusBarAlignment.Left,
       }
 
-      return cents ? [tokenItem, costItem] : [tokenItem]
+      return dollars ? [tokenItem, costItem] : [tokenItem]
     },
   })
 
