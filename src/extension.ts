@@ -54,11 +54,11 @@ export function activate(context: vscode.ExtensionContext) {
       const cents = ("" + dollars * 100).slice(0, 4)
       const tokenItem = {
         text: `${tokens} Tokens`,
-        alignment: vscode.NotebookCellStatusBarAlignment.Left,
+        alignment: vscode.NotebookCellStatusBarAlignment.Right,
       }
       const costItem = {
         text: `${cents}¢`,
-        alignment: vscode.NotebookCellStatusBarAlignment.Left,
+        alignment: vscode.NotebookCellStatusBarAlignment.Right,
       }
 
       return dollars ? [tokenItem, costItem] : [tokenItem]
