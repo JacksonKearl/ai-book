@@ -5,6 +5,7 @@ import {
   activate as activateWeb,
   deactivate as deactivateWeb,
 } from "./web/extension"
+import { get_encoding } from "@dqbd/tiktoken"
 
 export function activate(context: vscode.ExtensionContext) {
   activateWeb(context)
@@ -33,8 +34,39 @@ export function activate(context: vscode.ExtensionContext) {
     }
   }
 
-  const config = vscode.workspace.getConfiguration("llm-book.LLaMa")
-  if (config.get("binary")) {
+  const enc = get_encoding("cl100k_base") // technically, should change based on model/kernel.
+  vscode.notebooks.registerNotebookCellStatusBarItemProvider(notebookType, {
+    provideCellStatusBarItems(cell, token) {
+      const openAiConfig = vscode.workspace.getConfiguration("llm-book.openAI")
+      if (!openAiConfig.get<boolean>("showTokenCount")) {
+        return []
+      }
+
+      const text = cell.document.getText()
+
+      const dollarsPerKiloToken =
+        openAiConfig.get<number>("dollarsPerKiloToken") ?? 0
+
+      const encoding = enc.encode(text)
+      const tokens = encoding.length
+      const kiloTokens = tokens / 1000
+      const dollars = kiloTokens * dollarsPerKiloToken
+      const cents = ("" + dollars * 100).slice(0, 4)
+      const tokenItem = {
+        text: `${tokens} Tokens`,
+        alignment: vscode.NotebookCellStatusBarAlignment.Left,
+      }
+      const costItem = {
+        text: `${cents}¢`,
+        alignment: vscode.NotebookCellStatusBarAlignment.Left,
+      }
+
+      return cents ? [tokenItem, costItem] : [tokenItem]
+    },
+  })
+
+  const llamaConfig = vscode.workspace.getConfiguration("llm-book.LLaMa")
+  if (llamaConfig.get("binary")) {
     enableLLaMa()
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "llm-book",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "repository": {
     "url": "https://github.com/JacksonKearl/ai-book"
   },
@@ -58,6 +58,16 @@
             "type": "object",
             "default": {},
             "markdownDescription": "Additional data to send to `#llm-book.openAI.endpoint#` as fields in body's JSON. Used for fine configuration of runtime. Parameters configured per-notebook override this."
+          },
+          "llm-book.openAI.showTokenCount": {
+            "type": "boolean",
+            "default": true,
+            "markdownDescription": "Whether to show how many tokens a cell contains. Note: this assumes the GPT 3.5/4's tokenizer, `cl100k_base`"
+          },
+          "llm-book.openAI.dollarsPerKiloToken": {
+            "type": "number",
+            "default": 0,
+            "markdownDescription": "Cost per 1,000 tokens. Set 0 to hide."
           },
           "llm-book.LLaMa.binary": {
             "type": "string"
@@ -158,6 +168,7 @@
     "run-in-browser": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. ."
   },
   "dependencies": {
+    "@dqbd/tiktoken": "^1.0.7",
     "node-fetch": "^3.3.1"
   }
 }
