@@ -67,6 +67,7 @@ export const ControllerFromRunner =
 
       const appendOutput = async (content: string): Promise<void> => {
         if (execution.token.isCancellationRequested) {
+          execution.end(undefined)
           return
         }
 
