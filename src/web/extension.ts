@@ -6,8 +6,8 @@ import {
 import { ControllerFromRunner } from "./ControllerFromRunner"
 import { MakeOpenAiRunner } from "./OpenAiRunner"
 
+export const notebookType = "llm-book"
 export function activate(context: vscode.ExtensionContext) {
-  const notebookType = "llm-book"
 
   const notebookSerializer = vscode.workspace.registerNotebookSerializer(
     notebookType,

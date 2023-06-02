@@ -4,6 +4,8 @@ Interact with LLM's via VS Code notebooks.
 
 To begin, make a `*.llm` file and this extension will automatically take it from there.
 
+> Note: You can also use `*.llm.json` file, which functions identically but allows importing into scripts without needing to specifically configure a loader.
+
 As compared to ChatGPT where you only have control over the `user` message, this allows for precisely tuning all of the `system`, `user`, and `assistant` messages to best suit the task at hand (aka "Prompt Engineering"):
 
 ![example of overriding the assistant's response](./media/e1.png)
@@ -11,6 +13,10 @@ As compared to ChatGPT where you only have control over the `user` message, this
 ![example of overriding the assistant's response](./media/e3.png)
 
 Fun fact! The `.llm` format used by notebooks is on-disk represented in the official OpenAI "Chat Format" as JSON, meaning the tuned prompt notebook files can be loaded straight from disk and incorporated with the rest of your pipeline.
+
+### Pricing
+
+The extension is free to use. OpenAI isn't. Configure `llm-book.openAI.dollarsPerKiloToken` to show how much a given cell or notebook will cost to execute. Configure `llm-book.openAI.showTokenCount` to hide the token counts on cells and notebooks.
 
 ## LLaMa?
 

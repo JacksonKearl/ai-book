@@ -1,6 +1,6 @@
 {
   "name": "llm-book",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "repository": {
     "url": "https://github.com/JacksonKearl/ai-book"
   },
@@ -100,6 +100,9 @@
         "selector": [
           {
             "filenamePattern": "*.llm"
+          },
+          {
+            "filenamePattern": "*.llm.json"
           }
         ],
         "priority": "default"
@@ -142,7 +145,8 @@
           ""
         ],
         "extensions": [
-          ".llm"
+          ".llm",
+          ".llm.json"
         ],
         "icon": {
           "dark": "./media/file-icon.png",
