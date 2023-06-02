@@ -98,7 +98,8 @@ function getTokenMessages(
   const tokens = encoding.length
   const kiloTokens = tokens / 1000
   const dollars = kiloTokens * dollarsPerKiloToken
-  const cents = ("" + dollars * 100).slice(0, 4)
+  const truncateToRound = 0.005
+  const cents = ("" + (dollars * 100 + truncateToRound)).slice(0, 4)
   const tokenItem = {
     text: `${tokens} Tokens`,
     alignment: vscode.NotebookCellStatusBarAlignment.Right,
