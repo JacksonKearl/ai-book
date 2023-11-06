@@ -24,4 +24,4 @@ There is initial support for LLaMa models (anything CLI-powered, really) but it'
 
 ## OpenAI?
 
-By default the extension queries against OpenAI APIs (`https://api.openai.com/v1/chat/completions`), however this is easily configured via the `llm-book.openAI.endpoint` setting.
+By default the extension queries against OpenAI APIs (`https://api.openai.com/v1/chat/completions`), however this is easily configured via the `llm-book.openAI.endpoint` setting. Your API key is added in the notebook's controls.
