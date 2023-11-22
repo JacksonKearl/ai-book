@@ -17,7 +17,9 @@ export const ControllerFromRunner =
     notebook: vscode.NotebookDocument,
     controller: vscode.NotebookController,
   ): Promise<void> => {
-    const cell = cells.at(-1)!
+    const cell = cells.at(-1)
+    if (!cell) return
+
     const execution = controller.createNotebookCellExecution(cell)
     execution.start(Date.now())
     execution.clearOutput()
@@ -96,7 +98,7 @@ export const ControllerFromRunner =
         execution.token,
       )
 
-      if (lastCell) {
+      if (lastCell && !execution.token.isCancellationRequested) {
         await vscode.commands.executeCommand(
           "notebook.cell.insertCodeCellBelow",
         )

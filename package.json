@@ -1,6 +1,6 @@
 {
   "name": "llm-book",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "url": "https://github.com/JacksonKearl/ai-book"
   },
@@ -173,6 +173,8 @@
   },
   "dependencies": {
     "@dqbd/tiktoken": "^1.0.7",
+    "eslint-config-prettier": "^9.0.0",
+    "gjp-4-gpt": "^0.0.3",
     "node-fetch": "^3.3.1"
   }
 }

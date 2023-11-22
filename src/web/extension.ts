@@ -8,7 +8,6 @@ import { MakeOpenAiRunner } from "./OpenAiRunner"
 
 export const notebookType = "llm-book"
 export function activate(context: vscode.ExtensionContext) {
-
   const notebookSerializer = vscode.workspace.registerNotebookSerializer(
     notebookType,
     MessageJSONSerializer,
@@ -56,7 +55,9 @@ export function activate(context: vscode.ExtensionContext) {
           title,
         },
       )
-      if (!pick) return
+      if (!pick) {
+        return
+      }
 
       let key, value
       if (pick === newEntry) {
@@ -151,4 +152,6 @@ export function activate(context: vscode.ExtensionContext) {
   )
 }
 
-export function deactivate() {}
+export function deactivate() {
+  // pass
+}

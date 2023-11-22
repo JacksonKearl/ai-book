@@ -19,8 +19,8 @@ export function activate(context: vscode.ExtensionContext) {
       const notebookControllerLLaMa = vscode.notebooks.createNotebookController(
         "llm-book-llama",
         notebookType,
-        "LlAmA",
-        ControllerFromRunner(LLaMaRunner),
+        "LLaMa",
+        ControllerFromRunner(LLaMaRunner)
       )
 
       notebookControllerLLaMa.supportedLanguages = [
@@ -35,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   const enc = get_encoding("cl100k_base") // technically, should change based on model/kernel.
   vscode.notebooks.registerNotebookCellStatusBarItemProvider(notebookType, {
-    provideCellStatusBarItems(cell, token) {
+    provideCellStatusBarItems(cell) {
       const openAiConfig = vscode.workspace.getConfiguration("llm-book.openAI")
       if (!openAiConfig.get<boolean>("showTokenCount")) {
         return []
@@ -90,7 +90,7 @@ export function activate(context: vscode.ExtensionContext) {
 function getTokenMessages(
   config: vscode.WorkspaceConfiguration,
   enc: Tiktoken,
-  text: string,
+  text: string
 ) {
   const dollarsPerKiloToken = config.get<number>("dollarsPerKiloToken") ?? 0
 
