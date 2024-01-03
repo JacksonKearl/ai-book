@@ -25,14 +25,19 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
       delete notebook.metadata.parameters.settings;
       if (Object.prototype.hasOwnProperty.call(clonedSettings, 'endpoint')) {
         endpoint = clonedSettings.endpoint;
+        console.log("Overriding endpoint", endpoint)
       }
       if (Object.prototype.hasOwnProperty.call(clonedSettings, 'model')) {
         model = clonedSettings.model;
+        console.log("Overriding model", model)
       }
+      options = { ...options, ...notebook.metadata.parameters }
+      notebook.metadata.parameters.settings = { ...clonedSettings };
+    }
+    else{
+      options = { ...options, ...notebook.metadata.parameters }
     }
   
-    options = { ...options, ...notebook.metadata.parameters }
-
     console.log("Using options", options)
 
     const response = await fetch(endpoint, {
