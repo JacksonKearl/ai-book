@@ -42,7 +42,7 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
     if (readable.error) {
       throw Error(
         'Error accessing OpenAI. The "Update OpenAPI Api Key" command may help you.\n' +
-          (await readable.error).message,
+          (await readable.error).error.message,
       )
     }
     clearOutput()
