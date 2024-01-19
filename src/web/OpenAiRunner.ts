@@ -13,15 +13,31 @@ export const MakeOpenAiRunner: (context: vscode.ExtensionContext) => Runner =
     }
 
     const config = vscode.workspace.getConfiguration("llm-book.openAI")
-    const model = config.get<string>("model") ?? "gpt-3.5-turbo"
-    const endpoint =
+    let model = config.get<string>("model") ?? "gpt-3.5-turbo"
+    let endpoint =
       config.get<string>("endpoint") ??
       "https://api.openai.com/v1/chat/completions"
 
     let options = config.get<object>("parameters") ?? {}
 
-    options = { ...options, ...notebook.metadata.parameters }
-
+    if (Object.prototype.hasOwnProperty.call(notebook.metadata.parameters, 'settings')) {
+      const clonedSettings = { ...notebook.metadata.parameters.settings };
+      delete notebook.metadata.parameters.settings;
+      if (Object.prototype.hasOwnProperty.call(clonedSettings, 'endpoint')) {
+        endpoint = clonedSettings.endpoint;
+        console.log("Overriding endpoint", endpoint)
+      }
+      if (Object.prototype.hasOwnProperty.call(clonedSettings, 'model')) {
+        model = clonedSettings.model;
+        console.log("Overriding model", model)
+      }
+      options = { ...options, ...notebook.metadata.parameters }
+      notebook.metadata.parameters.settings = { ...clonedSettings };
+    }
+    else{
+      options = { ...options, ...notebook.metadata.parameters }
+    }
+  
     console.log("Using options", options)
 
     const response = await fetch(endpoint, {
